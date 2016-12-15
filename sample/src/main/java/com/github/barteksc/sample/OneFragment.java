@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -25,8 +26,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Nrtdemo-NB on 11/12/2016.
@@ -66,9 +69,14 @@ public class OneFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         //output.setText(editText.getText());
-                        url = "https://owlbot.info/api/v1/dictionary/" + editText.getText() + "?format=json";
-                        //inputUrl(editText.getText().toString());
-                        new MyTask().execute();
+                        //url = "https://owlbot.info/api/v1/dictionary/" + editText.getText() + "?format=json";
+                        inputUrl();
+                        try {
+                            new MyTask().execute();
+                        }catch (Exception e){
+                            e.printStackTrace();
+
+                        }
                     }
                 }
         );
@@ -79,12 +87,17 @@ public class OneFragment extends Fragment {
             }
         });
 
-
         return rootView;
     }
 
-    void inputUrl(String s) {
-        url = "https://owlbot.info/api/v1/dictionary/" + s + "?format=json";
+    private void inputUrl() {
+        String s = editText.getText().toString();
+        String[] splstr = s.split("\\s+");
+
+        if(splstr[0].isEmpty())
+            Toast.makeText(getActivity().getApplicationContext(),"Text eror!!",Toast.LENGTH_SHORT);
+
+        url = "https://owlbot.info/api/v1/dictionary/" + splstr[0] + "?format=json";
     }
 
     private class MyTask extends AsyncTask<Void,Void,Void>{
