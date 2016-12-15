@@ -25,6 +25,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -108,6 +113,16 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
 
     @OptionsItem(R.id.pickImage)
     void pickFragment() {
+
+//        Bitmap marker = BitmapFactory.decodeResource(getResources(),
+//                R.drawable.ic_action_maker);
+//        Canvas canvas = new Canvas();
+//        canvas.drawBitmap(marker, 40, 40, null);
+//        Paint mPaint = new Paint();
+//        mPaint.setColor(Color.RED);
+//        canvas.drawCircle(60, 60, 5, mPaint);
+
+
         OneFragment fragment = new OneFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.pdfView, fragment).commit();
     }
